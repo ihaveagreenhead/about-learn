@@ -1,0 +1,165 @@
+#include<iostream>
+#include<string>
+using namespace std;
+#define MAX 1000
+struct person
+{
+	string m_name;
+	int m_age;
+	int m_sex;//男1，女2
+	string m_phnum;
+	string m_add;
+};
+struct txladdreess {
+	//成员数组
+	person myarrry[MAX];
+	//目前人数
+	int s_size = -1;
+};
+void showMenu() {
+	cout << "*******************" << endl;
+	cout << "***1、创建联系人***" << endl;
+	cout << "***2、显示联系人***" << endl;
+	cout << "***3、删除联系人***" << endl;
+	cout << "***4、查找联系人***" << endl;
+	cout << "***5、修改联系人***" << endl;
+	cout << "***6、清空联系人***" << endl;
+	cout << "***0、退出通讯录***" << endl;
+	cout << "*******************" << endl;
+}
+void m_creat(txladdreess* m_txl) {
+	 m_txl->s_size ++;
+	cout << "type your name" << endl;
+	cin >> m_txl->myarrry[m_txl->s_size].m_name;
+	cout << "type your age" << endl;
+	cin >> m_txl->myarrry[m_txl->s_size].m_age;
+	cout << "type your sex" << endl;
+	cout << "1、男，2、女" << endl;
+	cin >> m_txl->myarrry[m_txl->s_size].m_sex;
+	cout << "type your phonenumber" << endl;
+	cin >> m_txl->myarrry[m_txl->s_size].m_phnum;
+	cout << "type your address" << endl;
+	cin >> m_txl->myarrry[m_txl->s_size].m_add;
+}
+void m_print(txladdreess* m_txl) {
+	for (int i = 0; i < m_txl->s_size + 1; i++)
+	{
+		cout << m_txl->myarrry[i].m_name;
+		cout << "\t";
+		cout << m_txl->myarrry[i].m_age;
+		cout << "\t";
+		if (m_txl->myarrry[i].m_sex == 1)
+		{
+			cout << "男";
+		}
+		else if (m_txl->myarrry[i].m_sex == 2)
+		{
+			cout << "女";
+		}
+		else
+		{
+			cout << "未知";
+		}
+		cout << "\t";
+		cout << m_txl->myarrry[i].m_phnum;
+		cout << "\t";
+		cout << m_txl->myarrry[i].m_add;
+		cout << endl;
+	}
+}
+void m_delete(txladdreess* m_txl) {
+	cout << "请输入要删除的姓名" << endl;
+	string be_delete;
+	cin >> be_delete;
+	int i = 0;
+	for (i = 0; i < m_txl->s_size; i++)
+	{
+		if (be_delete == m_txl->myarrry[i].m_name)
+		{
+			for (int j = i; j < m_txl->s_size; j++)
+			{
+				m_txl->myarrry[j] = m_txl->myarrry[j + 1];
+			}
+			//m_txl->myarrry[m_txl->s_size - 1] = { NULL };
+			m_txl->s_size = m_txl->s_size - 1;
+			break;
+		}
+		if (i == m_txl->s_size - 1)
+		{
+			cout << "查无此人" << endl;
+		}
+	}
+}
+int isExist(txladdreess m_txl,string name) 
+{
+	int i = 0;
+	//string name;
+	//cout << "请输入姓名" << endl;
+	//cin >> name;
+	for ( i = 0; i < m_txl.s_size; i++)
+	{
+		if (m_txl.myarrry[i].m_name== name)
+		{
+			return i;
+		}
+	}
+	return 0;
+}
+void getElem(txladdreess m_txl) 
+{
+	string name;
+	cout << "请输入查询姓名" << endl;
+	cin >> name;
+	int ret=isExist(m_txl, name);
+	if (ret)
+	{
+		cout << m_txl.myarrry[ret].m_name << "\t";
+		cout << m_txl.myarrry[ret].m_age << "\t";
+		cout << m_txl.myarrry[ret].m_sex << "\t";
+		cout << m_txl.myarrry[ret].m_phnum << "\t";
+		cout << m_txl.myarrry[ret].m_add << "\t";
+	}
+	else
+	{
+		cout << "muyou" << endl;
+	}
+
+}
+int main() {
+	int putton = 999999;
+	txladdreess m_txl;
+	txladdreess* abs = &m_txl;
+	do
+	{
+		showMenu();
+		cin >> putton;
+		switch (putton)
+		{
+		case 1://创建联系人
+			m_creat(abs);
+			break;
+		case 2://显示联系人
+			m_print(abs);
+			break;
+		case 3://删除联系人
+			m_delete(abs);
+			break;
+		case 4://查找联系人
+			getElem(m_txl);
+			break;
+		case 5://修改联系人
+			break;
+		case 6://清空联系人
+			break;
+		case 0://退出通讯录
+			break;
+		default:
+			cout << "错误选项,请重新选择" << endl;
+			break;
+		}
+		system("pause");
+		system("cls");
+	} while (putton);
+	system("pause");
+	return 0;
+}
