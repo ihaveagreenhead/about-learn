@@ -1,0 +1,97 @@
+#include <iostream>
+using namespace std;
+class caculator {
+public:
+	int m_A;
+	int m_B;
+	int opcaculator(char oper) 
+	{
+		if (oper=='+')
+		{
+			return m_A + m_B;
+		}
+		else if (oper=='-')
+		{
+			return m_A - m_B;
+		}
+		else if (oper=='*')
+		{
+			return m_A * m_B;
+		}
+		else if (oper=='/')
+		{
+			return m_A / m_B;
+		}
+	}
+
+};
+//多态完成
+class abstractCalculator {
+public:
+	virtual int getResult() {
+		return 0;
+	}
+	int m_A;
+	int m_B;
+};
+class pluscalculator:public abstractCalculator 
+{
+public:
+	virtual int getResult() 
+	{
+		return m_A + m_B;
+	}
+};
+class subcalculator :public abstractCalculator
+{
+public:
+	virtual int getResult()
+	{
+		return m_A - m_B;
+	}
+};
+class mulcalculator :public abstractCalculator
+{
+public:
+	virtual int getResult()
+	{
+		return m_A* m_B;
+	}
+};
+class divcalculator :public abstractCalculator
+{
+public:
+	virtual int getResult()
+	{
+		return m_A / m_B;
+	}
+};
+void test01() {
+	abstractCalculator *m=new pluscalculator;
+	m->m_A = 10;
+	m->m_B = 20;
+	cout << m->getResult()<<endl;
+	delete m;
+	m = new subcalculator;
+	m->m_A = 10;
+	m->m_B = 20;
+	cout << m->getResult()<<endl;
+	delete m;
+	m = new mulcalculator;
+	m->m_A = 10;
+	m->m_B = 20;
+	cout << m->getResult() << endl;
+	delete m; m = new divcalculator;
+	m->m_A = 10;
+	m->m_B = 20;
+	cout << m->getResult() << endl;
+	delete m;
+	
+}
+
+int main()
+{
+	test01();
+	//cout << "Hello World";
+	return 0;
+}
