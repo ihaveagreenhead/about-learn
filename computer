@@ -1,0 +1,114 @@
+#include<iostream>
+#include<string>
+using namespace std;
+class cpu {//cpu抽象函数
+public:
+	virtual void calculator() = 0;
+};
+class vision {//显卡抽象函数
+public:
+	virtual void display() = 0;
+};
+class memory {//内存抽象函数
+public:
+	virtual void storage() = 0;
+};
+class interCpu :public cpu//intercpu
+{
+	void calculator()
+	{
+		cout << "intercpu" << endl;
+	}
+};
+class intervision :public vision//inter显卡
+{
+	void display()
+	{
+		cout << "intervision" << endl;
+	}
+};
+class intermemory :public memory//inter内存
+{
+	void storage()
+	{
+		cout << "intercpu" << endl;
+	}
+};
+class huaweiCpu :public cpu//huaweicpu
+{
+	void calculator()
+	{
+		cout << "huaweicpu" << endl;
+	}
+};
+class huaweivision :public vision//huawei显卡
+{
+	void display()
+	{
+		cout << "huaweivision" << endl;
+	}
+};
+class huaweimemory :public memory//huawei内存
+{
+	void storage()
+	{
+		cout << "huaweicpu" << endl;
+	}
+};
+class computer //电脑实现
+{
+public:
+	cpu * m_cpu;
+	vision * m_vision;
+	memory* m_memory;
+	computer(cpu* cpu, vision* vision, memory *memory) 
+	{
+		m_cpu = cpu;
+		m_vision = vision;
+		m_memory = memory;
+	}
+	void runhanshu() 
+	{
+		this->m_cpu->calculator();
+		this->m_vision->display();
+		this->m_memory->storage();
+	
+	}
+	~computer()
+	{
+		if (m_cpu!=NULL)
+		{
+			cout << "触发cpu析构" << endl;
+			delete m_cpu;
+			m_cpu = NULL;
+		}	
+		if (m_vision != NULL)
+		{
+			cout << "触发vision析构" << endl;
+			delete m_vision;
+			m_vision = NULL;
+		}
+		if (m_memory != NULL)
+		{
+			cout << "触发memory析构" << endl;
+			delete m_memory;
+			m_memory = NULL;
+		}
+	}
+};
+
+
+void test01() {
+	cpu* m = new interCpu;
+	vision* n = new huaweivision;
+	memory* q = new intermemory;
+	computer pc(m, n, q);
+	pc.runhanshu();
+}
+
+int main() {
+
+	test01();
+	system("pause");
+	return 0;
+}
