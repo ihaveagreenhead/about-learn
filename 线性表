@@ -1,0 +1,115 @@
+#include<stdio.h>
+#include<stdlib.h>
+#include<stdbool.h>
+#define InitSize 10
+//typedef struct {
+//	int data[MaxSize];
+//	int length;
+//}Sqlist;
+//void Inilist(Sqlist *L)
+//{
+//	for (int  i = 0; i <MaxSize; i++)
+//	{
+//		L->data[i] = 0;
+//	}
+//	L->length = 0;
+//}
+//int main() {
+//	Sqlist L;
+//	Inilist(&L);
+//	for (int  i = 0; i < MaxSize; i++)
+//	{
+//		printf("%d\n", L.data[i]);
+//	}
+//	return 0;
+//}
+typedef struct {
+	int* data;
+	int maxsize;
+	int length;
+}Sqlist;
+void Initlist(Sqlist* L) 
+{
+	L->data = (int*)malloc(InitSize * sizeof(int));
+	L->length = 0;
+	L->maxsize = InitSize;
+}
+void increaselist(Sqlist *L,int len) 
+{
+	int* p = L->data;
+	L->data = (int*)malloc(((L->maxsize) + len) * sizeof(int));
+	for (int  i = 0; i < (L->maxsize+len); i++)
+	{
+		*((L->data)+i)= *(p+i);
+	}
+	L->maxsize = (L->maxsize) + len;
+	free(p);
+}
+bool inserlit(Sqlist * l,int i,int e)
+{
+	if (i<1||i>l->length+1)
+	{
+		return 0;
+	}
+	if (l->length >= l->maxsize)
+	{
+		return 0;
+	}
+	for (int j = l->length; j >=i; j--)
+	{
+		l->data[j + 1] = l->data[j];
+	}
+	l->data[i-1] = e;
+	(l->length)++;
+	return 1;
+}
+bool deletelist(Sqlist *l,int i,int e) {
+	if (i<i||i>l->maxsize+1)
+	{
+		return 0;
+	}
+	for (int  j = i-1; j <l->length; j++)
+	{
+		l->data[j] = l->data[j + 1];
+	}
+	l->length--;
+	return 1;
+
+}
+int e_serchlist(Sqlist l,int e) {
+	for (int  i = 0; i < l.length; i++)
+	{
+		if (e==l.data[i])
+		{
+			return i+1;
+		}
+	}
+	printf("无与之匹配值");
+	return 0;
+}
+int s_serchlist(Sqlist l, int i) {
+	if (i<i || i>l->maxsize + 1)
+	{
+		printf("输入有误");
+		return 0;
+	}
+	return l.data[i-1];
+
+}
+int main() {
+
+	Sqlist L;
+	Initlist(&L);
+	for (int  i = 0; i < L.maxsize; i++)
+	{
+		printf("%d\n", *(L.data+i));
+	}
+	increaselist(&L, 8);
+	printf("---------------------------------- \n");
+	for (int i = 0; i < L.maxsize; i++)
+	{
+		printf("%d\n", *(L.data + i));
+	}
+
+	return 0;
+}
