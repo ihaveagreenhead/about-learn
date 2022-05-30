@@ -40,3 +40,44 @@ bool findtop_s(m_stack L,char e)//查
 	e = L.data[L.top];
 	return true;
 }
+______________________________________________________________________________________________________________分割线
+#include<iostream>
+using namespace std;
+#define MaxSize 10
+class m_stack {//创建链栈
+public:
+	char e;
+	m_stack* List;
+};
+bool init_s(m_stack* &L) //初始化链栈
+{
+	L->List = NULL;
+	return true;
+}
+bool insert_s(m_stack* &L,char e) //插入数据
+{
+	m_stack* s = new m_stack;
+	s = L;
+	s->List = L->List;
+	L->List = s;
+	return true;
+}
+bool delete_s(m_stack* &L, char &r)//删除并返回数据
+{
+	if (L->List==NULL)
+	{
+		return false;
+	}
+	r = L->List->e;
+	L->List = L->List->List;
+	delete L->List;
+	return true;
+}
+m_stack* findtop_s(m_stack* L,char &r)//查
+{
+	if (L->List=NULL)
+	{
+		return false;
+	}
+	r = L->List->e;
+}
