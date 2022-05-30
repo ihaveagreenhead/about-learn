@@ -1,0 +1,42 @@
+#include<iostream>
+using namespace std;
+#define MaxSize 10
+class m_stack//静态创建栈
+{
+public:
+	char data[MaxSize];
+	int top=-1;
+};
+void destory_s(m_stack* L) //销毁静态栈，不过好像没有NEW 不需要
+{
+	delete L;
+}
+bool inser_s(m_stack* L,char e) //栈插入
+{
+	if (L->top==MaxSize-1)
+	{
+		return false;
+	}
+	L->top++;
+	L->data[L->top] = e;
+	return true;
+}
+bool delete_s(m_stack* L,char &e) //栈删除
+{
+	if (L->top==-1)
+	{
+		return false;
+	}
+	e = L->data[L->top];
+	L->top--;
+	return;
+}
+bool findtop_s(m_stack L,char e)//查
+{
+	if (L.top==-1)
+	{
+		return false;
+	}
+	e = L.data[L.top];
+	return true;
+}
